@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>EBsite (my 1st website)</title>
+    
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to My First Website</title>
+  <!-- Globe.gl Library -->
+  <script src="https://unpkg.com/globe.gl"></script>
+  <style>
+    :root {
+      --primary: #00d2ff;
+      --accent: #00f2fe;
+      --bg: #020205;
+    }
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: var(--bg);
+      color: white;
+      font-family: 'Courier New', Courier, monospace;
+      overflow: hidden;
+    }
+
+    /* Background Star Effect */
+    .stars-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+      z-index: -1;
+    }
+
+    /* Floating "My First Website" Badge */
+    .badge {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px dashed var(--primary);
+      border-radius: 4px;
+      z-index: 100;
+      backdrop-filter: blur(5px);
+    }
+
+    .badge h2 {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* Bottom Text Overlay */
+    .content-overlay {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      z-index: 10;
+      max-width: 400px;
+      pointer-events: none;
+    }
+
+    .content-overlay h1 {
+      font-size: 3rem;
+      margin: 0;
+      text-shadow: 0 0 10px var(--primary);
+    }
+
+    .content-overlay p {
+      font-family: sans-serif;
+      color: #ccc;
+      font-size: 1rem;
+    }
+
+    /* The Container for the Globe */
+    #globeViz {
+      width: 100vw;
+      height: 100vh;
+    }
+
+    /* Tech Grid Overlay */
+    .grid-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: linear-gradient(rgba(0, 210, 255, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(0, 210, 255, 0.05) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="stars-container"></div>
+  <div class="grid-overlay"></div>
+
+  <div class="badge">
+    <h2>My First Website</h2>
+    <span style="font-size: 0.7rem; color: #888;">EST. 2026</span>
+  </div>
+
+  <div class="content-overlay">
+    <h1>Hello World.</h1>
+    <p>Marking some provinces in the Philippines.</p>
+  </div>
+
+  <!-- The single ID used by the script -->
+  <div id="globeViz"></div>
+
+  <script>
+    // Data for Philippine Provinces
+    const philippinesData = [
+      { name: 'Cebu', lat: 10.3157, lng: 123.8854, color: '#f1c40f' },
+      { name: 'Davao', lat: 7.1907, lng: 125.4553, color: '#e67e22' },
+      { name: 'Pangasinan', lat: 15.8949, lng: 120.2863, color: '#2ecc71' },
+      { name: 'Antique', lat: 11.2000, lng: 122.1000, color: '#3498db' },
+      { name: 'Batanes', lat: 20.4484, lng: 121.9708, color: '#9b59b6' },
+      { name: 'Palawan', lat: 9.8349, lng: 118.7384, color: '#1abc9c' }
+    ];
+
+    const world = Globe()
+      (document.getElementById('globeViz'))
+      .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-night.jpg')
+      .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
+      .backgroundColor('rgba(0,0,0,0)') // Transparent to show the CSS background
+      
+      // Marker Labels
+      .labelsData(philippinesData)
+      .labelLat(d => d.lat)
+      .labelLng(d => d.lng)
+      .labelText(d => d.name)
+      .labelSize(1.5)
+      .labelDotRadius(0.6)
+      .labelColor(d => d.color)
+      
+      // Glowing Points
+      .pointsData(philippinesData)
+      .pointLat(d => d.lat)
+      .pointLng(d => d.lng)
+      .pointColor(d => d.color)
+      .pointRadius(0.3)
+      .pointAltitude(0.02);
+
+    // Aim the camera at the Philippines
+    world.pointOfView({ lat: 12.8797, lng: 121.7740, altitude: 2.0 });
+
+    // Slow rotation
+    world.controls().autoRotate = true;
+    world.controls().autoRotateSpeed = 0.5;
+
+    // Fix for window resizing
+    window.addEventListener('resize', () => {
+      world.width(window.innerWidth);
+      world.height(window.innerHeight);
+    });
+  </script>
+</body>
+</html>
+    
+  </body>
+  
+</html>
